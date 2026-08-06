@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMPEROR | Online Bookstore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="navbar">
+        <div class="logo">Emperor | Online Bookstore</div>
+        <nav>
+            <ul class="nav-links">
+                <!-- Added a shared class "filter-btn" and marked Home as active -->
+                <li><a href="#" class="filter-btn active">Home</a></li>
+                <li><a href="#" class="filter-btn">Fiction</a></li>
+                <li><a href="#" class="filter-btn">Non-Fiction</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content: Book Grid -->
+    <main class="store-container">
+       <!-- <h1>Featured Books</h1> -->
+        
+        <div class="book-grid">
+            
+            <!-- Book Card 1 -->
+            <article class="book-card">
+                <div class="image-wrapper">
+                    <img src="01.jpeg" alt="The old man and the sea Book Cover">
+                </div>
+                <div class="book-info">
+                    <h2 class="book-title">The Old Man and The Sea</h2>
+                    <p class="book-author">Hemingway</p>
+                    <div class="book-footer">
+                        <span class="book-price">ks 5000</span>
+                        <a href="#" class="buy-btn order-link" data-title="The Old Man and The Sea">Buy</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Book Card 2 -->
+            <article class="book-card">
+                <div class="image-wrapper">
+                    <img src="02.jpeg" alt="The $100 Startup Cover">
+                </div>
+                <div class="book-info">
+                    <h2 class="book-title">The $100 Startup</h2>
+                    <p class="book-author">Chris Guillebeau</p>
+                    <div class="book-footer">
+                        <span class="book-price">ks 5000</span>
+                        <a href="#" class="buy-btn order-link" data-title="The $100 Startup">Buy</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Book Card 3 -->
+            <article class="book-card">
+                <div class="image-wrapper">
+                    <img src="https://unsplash.com" alt="The Alchemist Book Cover">
+                </div>
+                <div class="book-info">
+                    <h2 class="book-title">The Alchemist</h2>
+                    <p class="book-author">Paulo Coelho</p>
+                    <div class="book-footer">
+                        <span class="book-price">$12.50</span>
+                        <a href="#" class="buy-btn order-link" data-title="The Alchemist">Buy</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Book Card 4 -->
+            <article class="book-card">
+                <div class="image-wrapper">
+                    <img src="https://unsplash.com" alt="Stolen Focus Book Cover">
+                </div>
+                <div class="book-info">
+                    <h2 class="book-title">Stolen Focus</h2>
+                    <p class="book-author">Johann Hari</p>
+                    <div class="book-footer">
+                        <span class="book-price">$18.00</span>
+                        <a href="#" class="buy-btn order-link" data-title="Stolen Focus">Buy</a>
+                    </div>
+                </div>
+            </article>
+	<!-- Book Card 5 -->
+            <article class="book-card">
+                <div class="image-wrapper">
+                    <img src="https://unsplash.com" alt="My book Cover">
+                </div>
+                <div class="book-info">
+                    <h2 class="book-title">My book</h2>
+                    <p class="book-author">Author</p>
+                    <div class="book-footer">
+                        <span class="book-price">$18.00</span>
+                        <a href="#" class="buy-btn order-link" data-title="My book">Buy</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- JavaScript Execution Area -->
+    <script>
+        // ==========================================
+        // YOUR ORIGINAL WORKING GOOGLE FORM SCRIPT
+        // ==========================================
+        const formBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeh2G6bPb3niAYeRIasX9jYh2ZDLzrtvKh80U9CAyDBJWgQ8A/viewform?usp=pp_url&entry.395947316=";
+        const orderLinks = document.querySelectorAll('.order-link');
+
+        orderLinks.forEach(link => {
+            const bookTitle = link.getAttribute('data-title');
+            const encodedTitle = encodeURIComponent(bookTitle);
+            link.href = formBaseUrl + encodedTitle;
+            link.target = "_blank";
+        });
+
+        // ==========================================
+        // ADDED INSTANT FILTER SCRIPT
+        // ==========================================
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const bookCards = document.querySelectorAll('.book-card');
+
+        // Manually tag book genres directly in JavaScript based on their title text
+        // This keeps your HTML identical to your working version
+        const bookGenres = {
+            "The Old Man and The Sea": "Fiction",
+            "The $100 Startup": "Non-Fiction",
+            "The Alchemist": "Fiction",
+            "Stolen Focus": "Non-Fiction",
+	    "My book": "Fiction"
+        };
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevents layout snapping to top
+                
+                // Toggle active style indicator highlights
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const selectedGenre = button.textContent.trim();
+                
+                bookCards.forEach(card => {
+                    const titleText = card.querySelector('.book-title').textContent.trim();
+                    const bookGenre = bookGenres[titleText];
+                    
+                    // If "Home" is clicked, show everything. Otherwise match selected text
+                    if (selectedGenre === "Home" || bookGenre === selectedGenre) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
